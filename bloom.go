@@ -343,6 +343,26 @@ func (f *BloomFilter) GobDecode(data []byte) error {
 	return err
 }
 
+// Encode just encode bitset
+func (f *BloomFilter) Encode() ([]byte, error) {
+	var buf bytes.Buffer
+	_, err := f.b.WriteTo(&buf)
+	if err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
+}
+//Decode just decode bitset
+func ( f*BloomFilter)Decode(data []byte ) error {
+	b := &bitset.BitSet{}
+	numBytes, err := b.ReadFrom(stream)
+	if err != nil {
+		return 0, err
+	}
+	f.b = b
+	return
+}
+
 // Equal tests for the equality of two Bloom filters
 func (f *BloomFilter) Equal(g *BloomFilter) bool {
 	return f.m == g.m && f.k == g.k && f.b.Equal(g.b)
