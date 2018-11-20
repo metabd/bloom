@@ -354,13 +354,14 @@ func (f *BloomFilter) Encode() ([]byte, error) {
 }
 //Decode just decode bitset
 func ( f*BloomFilter)Decode(data []byte ) error {
+	buf := bytes.NewBuffer(data)
 	b := &bitset.BitSet{}
-	numBytes, err := b.ReadFrom(stream)
+	_, err := b.ReadFrom(buf)
 	if err != nil {
-		return 0, err
+		return  err
 	}
 	f.b = b
-	return
+	return nil
 }
 
 // Equal tests for the equality of two Bloom filters
